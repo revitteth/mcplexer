@@ -45,13 +45,13 @@ const uspCards = [
     icon: Wrench,
     title: "Self-Configurable via MCP",
     description:
-      "Run mcplexer control-server to expose 15 MCP tools. Create workspaces, routes, and servers from Claude or any MCP client. Read-only mode available.",
+      "Run mcplexer control-server to expose 19 MCP tools. Create workspaces, routes, and servers from Claude or any MCP client. Read-only mode available.",
   },
   {
     icon: KeyRound,
     title: "OAuth 2.0 + PKCE",
     description:
-      "Built-in OAuth flows with PKCE. Provider templates for GitHub, Slack, and more. Automatic token refresh. Credentials injected into downstream env vars.",
+      "Built-in OAuth flows with PKCE. Provider templates for GitHub, Linear, Google, and more. Automatic token refresh. Credentials injected into downstream env vars.",
   },
   {
     icon: ScrollText,
@@ -512,7 +512,7 @@ export default function HomePage() {
                 <span className="text-cyan">$</span> {config.name}{" "}
                 control-server
                 <br />
-                <span className="text-text-dim"># 15 MCP tools exposed</span>
+                <span className="text-text-dim"># 19 MCP tools exposed</span>
                 <br />
                 <span className="text-text-dim">
                   # list_servers, create_route...
