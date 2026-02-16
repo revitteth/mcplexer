@@ -10,6 +10,7 @@ permissions:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: macos-latest
@@ -64,7 +65,12 @@ jobs:
           cd electron
           npm ci
 
-      - name: Build Electron package
+      - name: Build Electron app
+        run: |
+          cd electron
+          npm run build
+
+      - name: Package Electron app
         run: |
           cd electron
           npx electron-builder ${{ matrix.electron_flags }} --publish never
@@ -72,4 +78,9 @@ jobs:
       - name: Upload release artifacts
         uses: softprops/action-gh-release@v2
         with:
-          files: electron/release/*
+          files: |
+            electron/release/*.dmg
+            electron/release/*.exe
+            electron/release/*.AppImage
+            electron/release/*.blockmap
+            electron/release/latest*.yml
