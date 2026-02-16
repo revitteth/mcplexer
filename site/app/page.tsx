@@ -163,7 +163,7 @@ export default function HomePage() {
           {/* CTAs */}
           <div className="mt-8 flex flex-col sm:flex-row items-start gap-3">
             <Link
-              href={config.github}
+              href={config.releases}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 bg-cyan px-5 py-2.5 text-sm font-medium text-bg hover:bg-cyan-light transition-colors"
