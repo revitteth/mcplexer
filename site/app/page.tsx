@@ -20,6 +20,8 @@ import {
   Copy,
   Cable,
   Wrench,
+  Monitor,
+  Bell,
 } from "lucide-react";
 
 const uspCards = [
@@ -104,12 +106,12 @@ const steps = [
   {
     num: "01",
     title: "Install",
-    description: `Download the app or go install. Single binary, no dependencies.`,
+    description: `Download the desktop app (macOS / Windows / Linux) or go install the CLI. Single binary, no dependencies.`,
   },
   {
     num: "02",
-    title: "Setup",
-    description: `Run ${config.name} setup \u2014 it starts the daemon, configures Claude Desktop, and opens the dashboard. One command.`,
+    title: "Launch",
+    description: `Open the app \u2014 it starts the Go server, shows a system tray icon, and loads the dashboard. Native notifications for approval requests.`,
   },
   {
     num: "03",
@@ -451,13 +453,22 @@ export default function HomePage() {
                 desktop app
               </div>
               <div className="terminal text-[11px] leading-6 p-4">
-                <span className="text-cyan">$</span> {config.name} setup<br />
-                <span className="text-green">{"✓"}</span> daemon started<br />
-                <span className="text-green">{"✓"}</span> config updated
+                <div className="flex items-center gap-2">
+                  <Monitor className="w-3 h-3 text-cyan" />
+                  <span className="text-text">MCPlexer.app</span>
+                </div>
+                <div className="mt-1.5">
+                  <span className="text-green">{"●"}</span>
+                  <span className="text-text-dim"> tray: running</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Bell className="w-2.5 h-2.5 text-amber" />
+                  <span className="text-amber"> approval needed</span>
+                </div>
               </div>
               <p className="mt-4 text-xs text-text-dim">
-                Native app with tray icon, one-click setup. Auto-starts
-                daemon and configures Claude Desktop.
+                Electron app with system tray, native approval notifications,
+                and bundled Go binary. macOS, Windows, Linux.
               </p>
             </div>
 
