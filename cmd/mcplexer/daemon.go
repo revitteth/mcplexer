@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 )
 
@@ -101,7 +100,7 @@ func daemonStart(args []string) error {
 	cmd.Stderr = lf
 	cmd.Stdout = lf
 	// Detach from parent process group
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	daemonSysProcAttr(cmd)
 
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("start daemon: %w", err)
@@ -144,7 +143,7 @@ func daemonStop() error {
 		return fmt.Errorf("find process %d: %w", pid, err)
 	}
 
-	if err := proc.Signal(syscall.SIGTERM); err != nil {
+	if err := signalTerminate(proc); err != nil {
 		os.Remove(filepath.Join(dir, pidFile))
 		return fmt.Errorf("send SIGTERM to PID %d: %w", pid, err)
 	}
@@ -224,11 +223,4 @@ func readPID(dir string) (int, bool) {
 }
 
 // processAlive checks if a process with the given PID is still running.
-func processAlive(pid int) bool {
-	proc, err := os.FindProcess(pid)
-	if err != nil {
-		return false
-	}
-	// Signal 0 tests existence without sending a signal
-	return proc.Signal(syscall.Signal(0)) == nil
-}
+// Implemented in daemon_unix.go and daemon_windows.go.
