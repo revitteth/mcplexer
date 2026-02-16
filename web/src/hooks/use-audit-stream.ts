@@ -30,7 +30,8 @@ export function useAuditStream(filter: AuditStreamFilter) {
       if (filter.status) params.set('status', filter.status)
 
       const qs = params.toString()
-      const url = `/api/v1/audit/stream${qs ? `?${qs}` : ''}`
+      const apiBase = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/v1$/, '') || ''
+      const url = `${apiBase}/api/v1/audit/stream${qs ? `?${qs}` : ''}`
 
       const es = new EventSource(url)
       esRef.current = es

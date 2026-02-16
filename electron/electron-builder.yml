@@ -1,0 +1,40 @@
+appId: com.mcplexer.desktop
+productName: MCPlexer
+copyright: Copyright © 2024-2026
+
+directories:
+  output: release
+  buildResources: assets
+
+files:
+  - dist/**/*
+  - "!src/**/*"
+  - "!node_modules/**/*"
+
+extraResources:
+  - from: "resources/bin"
+    to: "bin"
+
+mac:
+  category: public.app-category.developer-tools
+  icon: assets/icon.icns
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+
+win:
+  icon: assets/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+
+linux:
+  icon: assets/icon.png
+  category: Development
+  target:
+    - target: AppImage
+      arch: [x64]
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

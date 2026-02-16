@@ -1,4 +1,6 @@
-.PHONY: build run dev start stop setup test lint clean web-build go-build secret
+.PHONY: build run dev start stop setup test lint clean web-build go-build secret \
+	electron-setup electron-dev electron-build go-build-platforms \
+	electron-package-mac electron-package-win electron-package-linux
 
 build: web-build go-build
 
@@ -39,3 +41,36 @@ secret:
 
 clean:
 	rm -rf bin/ web/dist/
+
+# Electron targets
+electron-setup:
+	cd electron && npm ci
+
+electron-dev: electron-setup
+	cd electron && npm run dev
+
+electron-build: web-build go-build electron-setup
+	cd electron && npm run build
+	mkdir -p electron/resources/bin
+	cp bin/mcplexer electron/resources/bin/
+	cd electron && npm run package
+
+# Cross-compile Go for all platforms
+go-build-platforms:
+	GOOS=darwin GOARCH=arm64 go build -o bin/darwin/arm64/mcplexer ./cmd/mcplexer
+	GOOS=darwin GOARCH=amd64 go build -o bin/darwin/amd64/mcplexer ./cmd/mcplexer
+	GOOS=linux GOARCH=amd64 go build -o bin/linux/amd64/mcplexer ./cmd/mcplexer
+	GOOS=windows GOARCH=amd64 go build -o bin/windows/amd64/mcplexer.exe ./cmd/mcplexer
+
+# Platform-specific electron packaging
+electron-package-mac: web-build electron-setup
+	GOOS=darwin GOARCH=arm64 go build -o electron/resources/bin/mcplexer ./cmd/mcplexer
+	cd electron && npm run build && npm run package:mac
+
+electron-package-win: web-build electron-setup
+	GOOS=windows GOARCH=amd64 go build -o electron/resources/bin/mcplexer.exe ./cmd/mcplexer
+	cd electron && npm run build && npm run package:win
+
+electron-package-linux: web-build electron-setup
+	GOOS=linux GOARCH=amd64 go build -o electron/resources/bin/mcplexer ./cmd/mcplexer
+	cd electron && npm run build && npm run package:linux

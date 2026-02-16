@@ -25,9 +25,18 @@ web/dist/
 .DS_Store
 Thumbs.db
 
+# Electron
+electron/dist/
+electron/release/
+electron/resources/
+electron/node_modules/
+
 # Age keys
 *.age
 *.key
+
+# Next.js
+.next/
 
 # Site
 site/node_modules/

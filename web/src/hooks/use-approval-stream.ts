@@ -14,7 +14,8 @@ export function useApprovalStream() {
     function connect() {
       if (cancelled) return
 
-      const es = new EventSource('/api/v1/approvals/stream')
+      const apiBase = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/v1$/, '') || ''
+      const es = new EventSource(`${apiBase}/api/v1/approvals/stream`)
       esRef.current = es
 
       es.onopen = () => {
