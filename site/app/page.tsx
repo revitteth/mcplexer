@@ -22,6 +22,7 @@ import {
   Wrench,
   Monitor,
   Bell,
+  Download,
 } from "lucide-react";
 
 const uspCards = [
@@ -608,27 +609,40 @@ export default function HomePage() {
               Ready to take control?
             </h2>
             <p className="text-text-muted text-sm mb-10 max-w-lg mx-auto">
-              Install {config.name} in seconds. Open source, local-first.
+              Download the desktop app for macOS, Windows, or Linux.
+              Or install the CLI if you prefer the terminal.
             </p>
 
-            <div className="inline-flex items-center gap-3 bg-bg-alt border border-border px-5 py-3 mb-10">
-              <Copy className="w-3.5 h-3.5 text-text-dim shrink-0" />
-              <code className="text-xs sm:text-sm text-cyan">
-                {config.installCmd}
-              </code>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
               <Link
-                href={config.github}
+                href={config.releases}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2 bg-cyan px-6 py-3 text-sm font-medium text-bg hover:bg-cyan-light transition-colors"
               >
-                View on GitHub
+                <Download className="w-4 h-4" />
+                Download Desktop App
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
+              <Link
+                href={config.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 border border-cyan/30 px-6 py-3 text-sm font-medium text-cyan hover:bg-cyan/5 transition-colors"
+              >
+                View on GitHub
+              </Link>
             </div>
+
+            <div className="inline-flex items-center gap-3 bg-bg-alt border border-border px-5 py-3">
+              <Terminal className="w-3.5 h-3.5 text-text-dim shrink-0" />
+              <code className="text-xs sm:text-sm text-cyan">
+                {config.installCmd}
+              </code>
+            </div>
+            <p className="mt-3 text-[11px] text-text-dim">
+              or install the CLI directly
+            </p>
           </div>
         </div>
       </section>
